@@ -14,7 +14,7 @@
 			handlersIndexAutoReload = true,
 
 			//Implicit Events
-			defaultEvent			= "Echo.index",
+			defaultEvent			= "Echo.index",//index for default
 			requestStartHandler		= "",
 			requestEndHandler		= "",
 			applicationStartHandler = "",
@@ -94,14 +94,21 @@
 		interceptors = [
 		];
 
-		/*
-		// module setting overrides
+		
+		// module setting overrides  config orm
 		moduleSettings = {
-			moduleName = {
-				settingName = "overrideValue"
+			cborm = {
+				injection = {
+					// enable entity injection via WireBox
+					enabled = true, 
+					// Which entities to include in DI ONLY, if empty include all entities
+					include = "", 
+					// Which entities to exclude from DI, if empty, none are excluded
+					exclude = ""
+				}
 			}
-		};
-
+		}
+/*
 		// flash scope configuration
 		flash = {
 			scope = "session,client,cluster,ColdboxCache,or full path",

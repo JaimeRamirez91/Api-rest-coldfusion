@@ -27,11 +27,13 @@
         "coldbox":"coldbox/",
         "testbox":"testbox/",
         "relax":"modules/relax/",
-        "cbswagger":"modules/cbswagger/"
+        "cbswagger":"modules/cbswagger/",
+        "cborm":"modules/cborm/"
     },
     "dependencies":{
         "coldbox":"^5.0.0",
-        "cbswagger":"^2.0.0"
+        "cbswagger":"^2.0.0",
+        "cborm":"be"
     },
     "scripts":{}
 }

@@ -9,7 +9,7 @@ component{
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,0,30,0);
 	this.setClientCookies = true;
-
+	
 	// COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
 	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
 	// The web server mapping to this application. Used for remote purposes or static purposes
@@ -18,6 +18,9 @@ component{
 	COLDBOX_CONFIG_FILE 	 = "";
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		 = "";
+
+	// In the pseudo constructor
+    this.mappings[ "/cborm" ] = COLDBOX_APP_ROOT_PATH & "modules/cborm";
 
 	// application start
 	public boolean function onApplicationStart(){
@@ -51,4 +54,37 @@ component{
 		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
 	}
 
+	/**
+	 * init config to orm
+	 */
+	// Locate the cborm module for events
+	this.mappings[ "/cborm" ] = COLDBOX_APP_ROOT_PATH & "modules/cborm";
+
+	// The default dsn name in the ColdBox scaffold
+	this.datasource = "coldbox"; 
+	// ORM Settings + Datasource
+	this.ormEnabled = "true";
+	this.ormSettings = {
+		cfclocation = [ "models" ], // Where our entities exist
+		logSQL = true, // Remove after development to false.
+		dbcreate = "update", // Generate our DB
+		automanageSession = false, // Let cborm manage it
+		flushAtRequestEnd = false, // Never do this! Let cborm manage it
+		eventhandling = true, // Enable events
+		eventHandler = "cborm.models.EventHandler", // Who handles the events
+		skipcfcWithError = true // Yes, because we must work in all CFML engines
+	};
+
+	// request start
+	public boolean function onRequestStart( string targetPage ){
+		// If we reinit our app, reinit the ORM too
+		if( application.cbBootstrap.isFWReinit() )
+			ormReload();
+
+		// Process ColdBox Request
+		application.cbBootstrap.onRequestStart( arguments.targetPage );
+
+		return true;
+	}
+	//end config to orm
 }
