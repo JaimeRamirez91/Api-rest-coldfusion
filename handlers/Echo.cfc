@@ -18,7 +18,19 @@ component extends="BaseHandler"{
 	* Index
 	*/
 	any function index( event, rc, prc ){
-		prc.response.setData( "Welcome to my ColdBox RESTFul Service" );
+		prc.response.setData( "Welcome to my ColdBox RESTFul Service" )
+		.setStatusCode(200)//ok response
+		//.setStatusText("hello test ok")
+		.addMessage("test to message")
+		.setError(false);/*true or false*/
+	}
+	
+	function test( event, rc, prc ){
+		prc.response.setData( "hola mundo test" )
+		.setStatusCode(200)//ok response
+		//.setStatusText("hello test ok")
+		.addMessage("test to message")
+		.setError(false);/*true or false*/
 	}
 	
 }

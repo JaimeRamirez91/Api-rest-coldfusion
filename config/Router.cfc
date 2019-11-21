@@ -18,12 +18,18 @@ component{
 		route("/healthcheck",function(event,rc,prc){
 			return "Ok!";
 		});
-
+        /**
+		 * if add new routes: reestart server
+		 */
 		// API Echo
-		get( "/api/echo", "Echo.index" );
-
+		get( "/api/index", "Echo.index" );
+		get( "/api/test", "Echo.test" );
+	
 		// Conventions based routing
 		route( ":handler/:action?" ).end();
+
+
+		
 	}
 
 }
