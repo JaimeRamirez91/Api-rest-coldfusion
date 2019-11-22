@@ -23,4 +23,25 @@ component{
 		structDelete( application, "cbController" );
 		structDelete( application, "wirebox" );
 	}
+	// Locate the cborm module for events
+    this.mappings[ "/cborm" ] = rootPath & "modules/cborm";
+
+    // ORM Settings + Datasource
+    this.datasource = "coldbox"; // The default dsn name in the ColdBox scaffold
+    this.ormEnabled = "true";
+    this.ormSettings = {
+        cfclocation = [ "models" ], // Where our entities exist
+        logSQL = true, // Remove after development to false.
+        dbcreate = "update", // Generate our DB
+        automanageSession = false, // Let cborm manage it
+        flushAtRequestEnd = false, // Never do this! Let cborm manage it
+        eventhandling = true, // Enable events
+        eventHandler = "cborm.models.EventHandler", // Who handles the events
+        skipcfcWithError = true // Yes, because we must work in all CFML engines
+    };
+
+    public boolean function onRequestStart( string targetPage ){
+        ormReload();
+        return true;
+    }
 }
