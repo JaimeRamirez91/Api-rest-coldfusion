@@ -27,12 +27,13 @@ component extends="coldbox.system.testing.BaseModelTest" model="models.Person"{
 	/*********************************** BDD SUITES ***********************************/
 	
 	function run(){
-        describe( "Person", function(){
-            it( "can be created", function(){
-                expect( getInstance( "Person" ) ).toBeComponent()
-            });
-        });
-    }
+
+		describe( "models.Person Suite", function(){
+			
+
+		});
+
+	}
 
 }
 

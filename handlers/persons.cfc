@@ -12,8 +12,7 @@ component{
 	this.aroundHandler_except = "";
 	// REST Allowed HTTP Methods Ex: this.allowedMethods = {delete='POST,DELETE',index='GET'}
 	this.allowedMethods = {};
-	// Inject our service layer
-	property name="personService" inject="entityService:Person";
+	
 	/**
 	IMPLICIT FUNCTIONS: Uncomment to use
 	function preHandler( event, rc, prc, action, eventArguments ){
@@ -43,16 +42,7 @@ component{
 	* create
 	*/
 	function create( event, rc, prc ){
-		prc.person = personService
-			.new( {
-				name     : "Luis",
-				age     : 40,
-				lastVisit : now()
-			} );
-		;
-		return personService
-			.save( prc.person )
-			.getMemento( includes="id" );
+		event.setView( "persons/create" );
 	}
 
 	/**
