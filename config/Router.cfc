@@ -25,6 +25,7 @@ component{
 		get( "/api/index", "Echo.index" );
 		get( "/api/test", "Echo.test" );
 		post( "/api/person/save", "persons.create" );
+		get( "/api/person/show", "persons.show" );
 	
 		// Conventions based routing
 		route( ":handler/:action?" ).end();
