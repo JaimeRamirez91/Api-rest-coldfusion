@@ -19,9 +19,6 @@ component{
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		 = "";
 
-	// In the pseudo constructor
-    this.mappings[ "/cborm" ] = COLDBOX_APP_ROOT_PATH & "modules/cborm";
-
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
@@ -75,15 +72,14 @@ component{
 		skipcfcWithError = true // Yes, because we must work in all CFML engines
 	};
 
-	// request start
 	public boolean function onRequestStart( string targetPage ){
 		// If we reinit our app, reinit the ORM too
 		if( application.cbBootstrap.isFWReinit() )
 			ormReload();
-
+		
 		// Process ColdBox Request
 		application.cbBootstrap.onRequestStart( arguments.targetPage );
-
+	
 		return true;
 	}
 	//end config to orm
