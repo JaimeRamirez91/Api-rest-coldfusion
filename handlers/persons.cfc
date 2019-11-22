@@ -1,8 +1,10 @@
 /**
 * I am a new handler
 */
-component{
-	
+component extends="coldbox.system.EventHandler"{
+	//property name="bcrypt"		inject="@BCrypt";
+	property name="userService"	inject="entityService:Person";
+//	property name="messagebox" inject="messagebox@cbmessagebox";/* **/
 	// OPTIONAL HANDLER PROPERTIES
 	this.prehandler_only 	= "";
 	this.prehandler_except 	= "";
@@ -11,9 +13,11 @@ component{
 	this.aroundHandler_only = "";
 	this.aroundHandler_except = "";
 	// REST Allowed HTTP Methods Ex: this.allowedMethods = {delete='POST,DELETE',index='GET'}
+	
 	this.allowedMethods = {};
+
 	// Inject our service layer
-	property name="personService" inject="entityService:Person";
+	//property name="personService" inject="entityService:Person";
 	/**
 	IMPLICIT FUNCTIONS: Uncomment to use
 	function preHandler( event, rc, prc, action, eventArguments ){
@@ -43,17 +47,19 @@ component{
 	* create
 	*/
 	function create( event, rc, prc ){
-		prc.person = personService
-			.new( {
-				name     : "Luis",
-				age     : 40,
-				lastVisit : now()
-			} );
-		;
-		return personService
-			.save( prc.person )
-			.getMemento( includes="id" );
-	}
+		var oUser = getInstance( "Person" );
+        var message = "";
+        if( oUser.isValid() ){
+			oUser.save();
+			message = "User Saved!" ;
+			//return "User Saved!" ;
+        }
+        else{
+			message = oUser.getValidationResults().getAllErrors() ;
+			 
+		}
+		return message;
+		}
 
 	/**
 	* show

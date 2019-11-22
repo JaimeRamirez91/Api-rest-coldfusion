@@ -10,7 +10,9 @@ component persistent="true" table="Person" extends="cborm.models.ActiveEntity"{
 	
 	// Validation
 	this.constraints = {
-		// Example: age = { required=true, min="18", type="numeric" }
+		"name" = {required=true}, 
+        "age"  = {required=true},
+        "lastVisit"     = {required=true}
 	};
 	
 	// Constructor
