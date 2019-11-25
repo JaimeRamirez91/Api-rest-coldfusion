@@ -77,9 +77,20 @@ component extends="BaseHandler"{
 		* show
 		*/
 		function show( event, rc, prc ){
-			return getInstance( "Person" )
-			      .get( rc.id ?: 0 )
-			      .getMemento( includes="id" );
+			/**
+			 * callback data to BD
+			 */
+			var responseData =  PersonService 
+			                    .list( asQuery=false )
+			                     // Map the entities to mementos
+                                .map( function( item ){
+				                     return item.getMemento( includes="id" );//return map elemments
+								 } );
+            //return json format api
+			prc.response.setData(responseData)
+		                .setStatusCode(200)
+		                .addMessage("Data response ok")
+		                .setError(false);/*true or false*/;	
 		}
 
 		/**
@@ -93,9 +104,22 @@ component extends="BaseHandler"{
 		* delete
 		*/
 		function delete( event, rc, prc ){
-			event.setView( "persons/delete" );
+			try{
+				PersonService.getOrFail( rc.id ?: '' ).delete();
+		        /**
+				 * response ok
+				 */					 
+				prc.response.setData("Data delete")
+							 .setStatusCode(200)
+							 .addMessage("Data delete")
+							 .setError(false);/*true or false*/;
+				
+			} catch( any e ){
+                // Any error response
+				prc.response.setData("")
+						.setStatusCode(422)
+						.addMessage("Error deleting entity: #e.message# #e.detail#")
+						.setError(true);/*true or false*/
+			}
 		}
-
-
-	
 }

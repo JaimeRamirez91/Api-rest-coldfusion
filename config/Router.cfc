@@ -24,7 +24,12 @@ component{
 		// API Echo
 		get( "/api/index", "Echo.index" );
 		get( "/api/test", "Echo.test" );
+		/**
+		 * Undocumented DRUD
+		 */
 		post( "/api/person/save", "persons.create" );
+		delete( "/api/person/delete", "persons.delete" );
+		put( "/api/person/update", "persons.update");
 		get( "/api/person/show", "persons.show" );
 	
 		// Conventions based routing
